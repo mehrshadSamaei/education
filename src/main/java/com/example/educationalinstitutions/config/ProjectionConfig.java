@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,11 +34,18 @@ public class ProjectionConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/teacher/**")
-                .hasAnyRole("ADMIN", "TEACHER")
+                .hasAnyRole("ADMIN")
                 .and()
-                .authorizeRequests().antMatchers("/student/**").
-                hasAnyRole("ADMIN", "STUDENT").and()
-                .authorizeRequests().anyRequest()
+                .authorizeRequests().antMatchers("/student/**")
+                .hasRole("ADMIN")
+                .and().authorizeRequests().antMatchers("/course/**").hasRole("ADMIN")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/teacher/login", "/teacher/update-teacher")
+                .hasRole("TEACHER").and()
+                .authorizeRequests().antMatchers("/teacher/login", "/teacher/update-teacher")
+                .hasRole("STUDENT")
+                .anyRequest()
                 .authenticated();
         http.formLogin();
         http.httpBasic();
@@ -49,7 +54,6 @@ public class ProjectionConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-//        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

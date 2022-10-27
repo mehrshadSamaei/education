@@ -48,6 +48,12 @@ public class StudentServiceImpl extends BaseServiceImpl<
         return mapper.convertEToT(student);
     }
 
+    @Override
+    public StudentDto findByUsernameAndPassword(String username, String password) {
+        Student studentEntity = repository.findByUsernameAndPassword(username, password);
+        return mapper.convertEToT(studentEntity);
+    }
+
     private void setMobileNumInPredicate(CriteriaBuilder criteriaBuilder, Root<Student> root, List<Predicate> predicates, String mobileNum) {
         if (mobileNum != null) {
             predicates.add(criteriaBuilder.like(root.get("mobileNum"), "%" + mobileNum + "%"));

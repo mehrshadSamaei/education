@@ -13,4 +13,6 @@ public interface AdminRepository extends BaseRepository<Admin , Long> {
     Page<Admin> findAll(Specification<Admin> spec, Pageable pageable);
 
     Admin findAdminsByUsername(String username);
+
+    Admin findByUsernameAndPassword(String username, String password);
 }

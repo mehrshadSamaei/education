@@ -41,10 +41,15 @@ public class TeacherServiceImpl extends BaseServiceImpl<
         );
         return mapper.convertListEToListT(teacherList);
     }
-
     @Override
     public TeacherDto findByUsername(String username) {
         Teacher teacher = repository.findByUsername(username);
+        return mapper.convertEToT(teacher);
+    }
+
+    @Override
+    public TeacherDto findByUsernameAndPassword(String username, String password) {
+        Teacher teacher = repository.findByUsernameAndPassword(username, password);
         return mapper.convertEToT(teacher);
     }
 

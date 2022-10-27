@@ -54,6 +54,12 @@ public class AdminServiceImpl extends BaseServiceImpl<
         return adminDto;
     }
 
+    @Override
+    public AdminDto findByUsernameAndPassword(String username, String password) {
+        Admin adminEntity = repository.findByUsernameAndPassword(username, password);
+        return mapper.convertEToT(adminEntity);
+    }
+
     private void setEmailAddressInPredicate(CriteriaBuilder criteriaBuilder, Root<Admin> root, List<Predicate> predicates, String email) {
         if (email != null) {
             predicates.add(

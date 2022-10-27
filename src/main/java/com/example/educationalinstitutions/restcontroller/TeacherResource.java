@@ -37,8 +37,8 @@ public class TeacherResource {
                 teacherService.saveOrUpdate(teacherDto)
         );
     }
-    @PutMapping("/update-admin")
-    public ResponseEntity<TeacherDto> updateAdmin(@RequestBody TeacherDto teacherDto){
+    @PutMapping("/update-teacher")
+    public ResponseEntity<TeacherDto> updateTeacher(@RequestBody TeacherDto teacherDto){
         return ResponseEntity.ok(
                 teacherService.saveOrUpdate(teacherDto)
         );

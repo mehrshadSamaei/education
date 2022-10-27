@@ -15,5 +15,5 @@ public class CourseDto extends BaseDto<Long> {
     private String title;
     private Date startCourseDay;
     private Date endOfCourseDay;
-    private TeacherDto teacherDto;
+    private TeacherDto teacher;
 }

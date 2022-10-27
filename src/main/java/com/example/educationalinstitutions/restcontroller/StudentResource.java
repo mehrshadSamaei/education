@@ -20,6 +20,13 @@ public class StudentResource {
     @Autowired
     private final StudentService studentService;
 
+    @GetMapping("login-student")
+    public void loginStudent(@RequestParam String username , String password){
+        StudentDto studentDto = studentService.findByUsernameAndPassword(username, password);
+
+    }
+
+
     @GetMapping("/find-by-id-student")
     public ResponseEntity<StudentDto> findAdminById(@RequestParam Long id){
         return ResponseEntity.ok(

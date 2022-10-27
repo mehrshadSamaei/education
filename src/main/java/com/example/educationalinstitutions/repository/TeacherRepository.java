@@ -12,4 +12,5 @@ public interface TeacherRepository extends BaseRepository<Teacher , Long> {
     @Override
     Page<Teacher> findAll(Specification<Teacher> spec, Pageable pageable);
     Teacher findByUsername(String username);
+    Teacher findByUsernameAndPassword(String username , String password);
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "coursess")
@@ -22,5 +23,7 @@ public class Course extends BaseEntity<Long> {
     private Date endOfCourseDay;
     @ManyToOne
     private Teacher teacher;
+    @OneToMany(mappedBy = "course")
+    private List<ReportCard> reportCards;
 
 }

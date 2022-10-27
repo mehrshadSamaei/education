@@ -8,8 +8,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.UUID;
 
-public interface StudentRepository extends BaseRepository<Student , Long> {
+public interface StudentRepository extends BaseRepository<Student, Long> {
     @Override
     Page<Student> findAll(Specification<Student> spec, Pageable pageable);
+
     Student findByUsername(String username);
+
+    Student findByUsernameAndPassword(String username, String password);
 }

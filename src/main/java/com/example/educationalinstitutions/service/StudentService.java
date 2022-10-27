@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface StudentService extends BaseService<StudentDto , Long> {
     List<StudentDto> findAllAdvanceSearch(StudentSearch studentSearch);
     StudentDto findByUsername(String username);
+    StudentDto findByUsernameAndPassword(String username ,String password);
 }

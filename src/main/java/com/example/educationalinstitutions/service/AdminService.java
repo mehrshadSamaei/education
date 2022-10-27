@@ -12,4 +12,6 @@ public interface AdminService extends BaseService<AdminDto , Long> {
     List<AdminDto> findAllAdvanceSearch(AdminSearch adminSearch);
 
     AdminDto findByUsername(String username);
+
+    AdminDto findByUsernameAndPassword(String username , String password);
 }
