@@ -1,13 +1,13 @@
 package com.example.educationalinstitutions.domain;
 
 import com.example.educationalinstitutions.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +16,9 @@ import java.util.UUID;
 @Setter
 @Getter
 @ToString
-public class Student extends BaseEntity<Long> {
+@NoArgsConstructor
+public class Student extends User {
+    @ManyToMany
+    private Set<Role> roles = new HashSet<>();
 
 }

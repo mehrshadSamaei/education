@@ -26,7 +26,7 @@ public class TeacherServiceImpl extends BaseServiceImpl<
 
     @Override
     public List<TeacherDto> findAllAdvanceSearch(TeacherSearch teacherSearch) {
-        repository.findAll(
+        List<Teacher> teacherList = repository.findAll(
                 (root, query, criteriaBuilder) -> {
                     List<Predicate> predicates = new ArrayList<>();
                     setFirstNameInPredicate(criteriaBuilder, root, predicates, teacherSearch.getFirstName());
@@ -37,7 +37,13 @@ public class TeacherServiceImpl extends BaseServiceImpl<
                     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
                 }
         );
-        return null;
+        return mapper.convertListEToListT(teacherList);
+    }
+
+    @Override
+    public TeacherDto findByUsername(String username) {
+        Teacher teacher = repository.findByUsername(username);
+        return mapper.convertEToT(teacher);
     }
 
     private void setEmailInPredicate(CriteriaBuilder criteriaBuilder, Root<Teacher> root, List<Predicate> predicates, String email) {

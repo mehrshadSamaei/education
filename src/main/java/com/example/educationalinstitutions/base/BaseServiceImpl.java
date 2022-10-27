@@ -1,5 +1,6 @@
 package com.example.educationalinstitutions.base;
 
+import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,7 +47,7 @@ public class BaseServiceImpl<T extends BaseDto<ID>,
     public T findById(ID id) {
         E e = repository.findById(id).get();
         if (e.getId() == null){
-//            throw new NotFoundException();
+            throw new NotFountEntity("not found your id");
         }
         return mapper.convertEToT(e);
     }

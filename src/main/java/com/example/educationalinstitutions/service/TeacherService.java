@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface TeacherService extends BaseService<TeacherDto , Long> {
     List<TeacherDto> findAllAdvanceSearch(TeacherSearch teacherSearch);
+    TeacherDto findByUsername(String username);
 }

@@ -2,12 +2,15 @@ package com.example.educationalinstitutions.restcontroller;
 
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
+import com.example.educationalinstitutions.dto.search.StudentSearch;
 import com.example.educationalinstitutions.service.StudentService;
 import com.example.educationalinstitutions.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -38,5 +41,11 @@ public class StudentResource {
     public void delete(@RequestBody StudentDto studentDto){
         Long id = studentDto.getId();
         studentService.deleteById(id);
+    }
+    @PostMapping("/search")
+    public ResponseEntity<List<StudentDto>> advanceStudentSearch(@RequestBody StudentSearch studentSearch){
+         return ResponseEntity.ok(
+                studentService.findAllAdvanceSearch(studentSearch)
+        );
     }
 }

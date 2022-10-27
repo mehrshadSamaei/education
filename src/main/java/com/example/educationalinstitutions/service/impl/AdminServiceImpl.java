@@ -5,6 +5,7 @@ import com.example.educationalinstitutions.base.BaseService;
 import com.example.educationalinstitutions.base.BaseServiceImpl;
 import com.example.educationalinstitutions.domain.Admin;
 import com.example.educationalinstitutions.dto.AdminDto;
+import com.example.educationalinstitutions.dto.UserDto;
 import com.example.educationalinstitutions.dto.search.AdminSearch;
 import com.example.educationalinstitutions.mapper.AdminMapper;
 import com.example.educationalinstitutions.repository.AdminRepository;
@@ -31,7 +32,7 @@ public class AdminServiceImpl extends BaseServiceImpl<
 
     @Override
     public List<AdminDto> findAllAdvanceSearch(AdminSearch adminSearch) {
-        repository.findAll((root, query, criteriaBuilder) -> {
+        List<Admin> adminList = repository.findAll((root, query, criteriaBuilder) -> {
                     List<Predicate> predicates = new ArrayList<>();
                     setFirstNameInPredicate(criteriaBuilder, root, predicates, adminSearch.getFirstName());
                     setLastNameInPredicate(criteriaBuilder, root, predicates, adminSearch.getLastName());
@@ -43,7 +44,14 @@ public class AdminServiceImpl extends BaseServiceImpl<
 
         );
 
-        return null;
+        return mapper.convertListEToListT(adminList);
+    }
+
+    @Override
+    public AdminDto findByUsername(String username) {
+        Admin adminsByUsername = repository.findAdminsByUsername(username);
+        AdminDto adminDto = mapper.convertEToT(adminsByUsername);
+        return adminDto;
     }
 
     private void setEmailAddressInPredicate(CriteriaBuilder criteriaBuilder, Root<Admin> root, List<Predicate> predicates, String email) {

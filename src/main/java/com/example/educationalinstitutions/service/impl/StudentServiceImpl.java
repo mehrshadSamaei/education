@@ -26,7 +26,7 @@ public class StudentServiceImpl extends BaseServiceImpl<
 
     @Override
     public List<StudentDto> findAllAdvanceSearch(StudentSearch studentSearch) {
-        repository.findAll(
+        List<Student> studentList = repository.findAll(
                 (root, query, criteriaBuilder) -> {
                     List<Predicate> predicates = new ArrayList<>();
                     setFirstNameInPredicate(criteriaBuilder, root, predicates, studentSearch.getFirstName());
@@ -37,7 +37,13 @@ public class StudentServiceImpl extends BaseServiceImpl<
                     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
                 }
         );
-        return null;
+        return mapper.convertListEToListT(studentList);
+    }
+
+    @Override
+    public StudentDto findByUsername(String username) {
+        Student student = repository.findByUsername(username);
+        return mapper.convertEToT(student);
     }
 
     private void setMobileNumInPredicate(CriteriaBuilder criteriaBuilder, Root<Student> root, List<Predicate> predicates, String mobileNum) {

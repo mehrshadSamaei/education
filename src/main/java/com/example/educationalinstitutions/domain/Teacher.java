@@ -3,10 +3,8 @@ package com.example.educationalinstitutions.domain;
 import com.example.educationalinstitutions.base.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,11 +15,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Teacher extends BaseEntity<Long> {
+public class Teacher extends User {
     @Column(name = "Specialty")
     private String Specialty;
     @Column(name = "work_experience")
     private Integer workExperience;
     @OneToMany(mappedBy = "teacher")
     private Set<Course> courses;
+    @ManyToMany
+    private Set<Role> roles = new HashSet<>();
 }

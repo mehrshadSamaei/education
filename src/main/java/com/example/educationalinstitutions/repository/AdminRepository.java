@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface AdminRepository extends BaseRepository<Admin , Long> {
     @Override
     Page<Admin> findAll(Specification<Admin> spec, Pageable pageable);
+
+    Admin findAdminsByUsername(String username);
 }

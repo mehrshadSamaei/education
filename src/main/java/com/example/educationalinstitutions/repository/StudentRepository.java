@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface StudentRepository extends BaseRepository<Student , Long> {
     @Override
     Page<Student> findAll(Specification<Student> spec, Pageable pageable);
+    Student findByUsername(String username);
 }
