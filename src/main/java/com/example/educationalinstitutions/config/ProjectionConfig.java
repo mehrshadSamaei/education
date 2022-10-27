@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class ProjectionConfig extends WebSecurityConfigurerAdapter {
+    @Qualifier("Admin")
     @Autowired
     private final UserDetailsService userDetailsService;
 
@@ -35,13 +36,12 @@ public class ProjectionConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/teacher/**")
-                .hasAnyRole("ADMIN", "STUDENT" , "TEACHER")
+                .hasAnyRole("ADMIN", "TEACHER")
                 .and()
+                .authorizeRequests().antMatchers("/student/**").
+                hasAnyRole("ADMIN", "STUDENT").and()
                 .authorizeRequests().anyRequest()
                 .authenticated();
-
-        http.authorizeRequests().antMatchers("/student/**")
-                .hasAnyRole("STUDENT", "ADMIN");
         http.formLogin();
         http.httpBasic();
     }

@@ -10,39 +10,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentResource {
     @Autowired
     private final StudentService studentService;
 
-    @GetMapping
+    @GetMapping("/find-by-id-student")
     public ResponseEntity<StudentDto> findAdminById(@RequestParam Long id){
         return ResponseEntity.ok(
                 studentService.findById(id)
         );
     }
-    @PostMapping
-    public ResponseEntity<StudentDto> createAdmin(@RequestBody StudentDto studentDto){
+    @GetMapping("/list-students")
+    public ResponseEntity<List<StudentDto>> findAllStudents(){
         return ResponseEntity.ok(
+                studentService.findAll()
+        );
+    }
+    @PostMapping("/save-admin")
+    public void createAdmin(@RequestBody @Valid StudentDto studentDto){
+         ResponseEntity.ok(
                 studentService.saveOrUpdate(studentDto)
         );
     }
-    @PutMapping
+    @PutMapping("/update-admin")
     public ResponseEntity<StudentDto> updateAdmin(@RequestBody StudentDto studentDto){
         return ResponseEntity.ok(
                 studentService.saveOrUpdate(studentDto)
         );
     }
-    @DeleteMapping
+    @DeleteMapping("/delete-admin")
     public void delete(@RequestBody StudentDto studentDto){
         Long id = studentDto.getId();
         studentService.deleteById(id);
     }
-    @PostMapping("/search")
+    @PostMapping("/search-student")
     public ResponseEntity<List<StudentDto>> advanceStudentSearch(@RequestBody StudentSearch studentSearch){
          return ResponseEntity.ok(
                 studentService.findAllAdvanceSearch(studentSearch)

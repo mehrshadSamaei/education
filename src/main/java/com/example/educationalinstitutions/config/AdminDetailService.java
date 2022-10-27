@@ -4,6 +4,9 @@ import com.example.educationalinstitutions.domain.Admin;
 import com.example.educationalinstitutions.mapper.AdminMapper;
 import com.example.educationalinstitutions.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +14,9 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
+@Order(1)
+@Qualifier("Admin")
+@Primary
 public class AdminDetailService implements UserDetailsService {
 
     private final AdminService adminService;

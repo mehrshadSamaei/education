@@ -5,6 +5,8 @@ import com.example.educationalinstitutions.domain.Teacher;
 import com.example.educationalinstitutions.mapper.StudentMapper;
 import com.example.educationalinstitutions.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
+@Order(2)
+@Qualifier("Student")
 public class StudentDetailService implements UserDetailsService {
 
     private final StudentService studentService;

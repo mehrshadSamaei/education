@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Admin extends User{
     @ManyToMany
     private Set<Role> roles = new HashSet<>();

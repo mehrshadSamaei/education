@@ -8,6 +8,7 @@ import com.example.educationalinstitutions.mapper.TeacherMapper;
 import com.example.educationalinstitutions.repository.TeacherRepository;
 import com.example.educationalinstitutions.service.TeacherService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class TeacherServiceImpl extends BaseServiceImpl<
         TeacherDto, Teacher, TeacherMapper, Long, TeacherRepository> implements TeacherService {
 

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,6 +28,7 @@ public class BaseServiceImpl<T extends BaseDto<ID>,
     @Transactional
     public T saveOrUpdate(T t) {
         E e = mapper.convertTToE(t);
+//        e.setId(UUID.randomUUID().toString());
         E saveEntity = repository.save(e);
         return mapper.convertEToT(saveEntity);
     }
@@ -33,7 +36,8 @@ public class BaseServiceImpl<T extends BaseDto<ID>,
     @Override
     @Transactional
     public void deleteById(ID id) {
-        E e = repository.findById(id).get();
+        T t = findById(id);
+        E e = mapper.convertTToE(t);
         repository.delete(e);
     }
 
@@ -45,11 +49,12 @@ public class BaseServiceImpl<T extends BaseDto<ID>,
 
     @Override
     public T findById(ID id) {
-        E e = repository.findById(id).get();
-        if (e.getId() == null){
+        Optional<E> optionalE = repository.findById(id);
+        if (optionalE.isPresent()){
+            E e = repository.findById(id).get();
+            return mapper.convertEToT(e);
+        }else
             throw new NotFountEntity("not found your id");
-        }
-        return mapper.convertEToT(e);
     }
 
     @Override

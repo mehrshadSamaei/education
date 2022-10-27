@@ -17,6 +17,7 @@ import java.util.UUID;
 @Getter
 @ToString
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Student extends User {
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
