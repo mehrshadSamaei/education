@@ -6,6 +6,7 @@ import com.example.educationalinstitutions.domain.Teacher;
 import com.example.educationalinstitutions.dto.CourseDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.TeacherSearch;
+import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import com.example.educationalinstitutions.mapper.CourseMapper;
 import com.example.educationalinstitutions.mapper.TeacherMapper;
 import com.example.educationalinstitutions.repository.TeacherRepository;
@@ -56,6 +57,19 @@ public class TeacherServiceImpl extends BaseServiceImpl<
     public TeacherDto findByUsernameAndPassword(String username, String password) {
         Teacher teacher = repository.findByUsernameAndPassword(username, password);
         return mapper.convertEToT(teacher);
+    }
+
+    @Override
+    public List<CourseDto> findAllCoursesByTeacherUsername(String username) {
+        TeacherDto teacherDto = findByUsername(username);
+        if (teacherDto == null){
+            throw new NotFountEntity("username invalid");
+        }
+        List<Course> courses = repository.findAllCoursesByTeacherUsername(username);
+        if (courses.size() == 0){
+            throw new NotFountEntity("sorry , you have not course");
+        }
+        return courseMapper.convertListEToListT(courses);
     }
 
 //    @Override

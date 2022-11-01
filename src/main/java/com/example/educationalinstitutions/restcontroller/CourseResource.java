@@ -1,6 +1,7 @@
 package com.example.educationalinstitutions.restcontroller;
 
 import com.example.educationalinstitutions.dto.CourseDto;
+import com.example.educationalinstitutions.dto.ExamsDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.CourseSearch;
@@ -55,8 +56,8 @@ public class CourseResource {
                 courseService.findAllAdvanceSearch(courseSearch)
         );
     }
-    @PostMapping("/find-by-title-course-list-student")
-    public ResponseEntity<List<StudentDto>> findAllStudents(@RequestBody String title){
+    @GetMapping("/find-by-title-course-list-student")
+    public ResponseEntity<List<StudentDto>> findAllStudents(@RequestParam String title){
         List<StudentDto> studentsDto = courseService.findAllStudentsByTitleSpecialCourse(title);
         if (studentsDto.size() == 0){
          throw new NotFountEntity("there are not any student");
@@ -65,8 +66,8 @@ public class CourseResource {
                 studentsDto
         );
     }
-    @PostMapping("/find-by-title-course-teacher")
-    public ResponseEntity<TeacherDto> findTeacherWithCourseTitle(@RequestBody String title){
+    @GetMapping("/find-by-title-course-teacher")
+    public ResponseEntity<TeacherDto> findTeacherWithCourseTitle(@RequestParam String title){
         TeacherDto teacherDto = courseService.findTeacherByTitleSpecialCourse(title);
         if (teacherDto.getId() == null){
             throw new NotFountEntity("this course has not teacher");

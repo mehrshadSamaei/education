@@ -1,6 +1,7 @@
 package com.example.educationalinstitutions.dto;
 
 import com.example.educationalinstitutions.base.BaseDto;
+import com.example.educationalinstitutions.domain.Wait;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,7 +30,7 @@ public class UserDto extends BaseDto<Long> {
 
     private Integer age;
 
-    private String status = "waiting";
+    private String status = Wait.waiting.getConvertString();
     @NotBlank
     private String nationalCode;
     @NotBlank

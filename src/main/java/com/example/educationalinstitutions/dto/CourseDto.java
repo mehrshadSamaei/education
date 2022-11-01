@@ -1,6 +1,7 @@
 package com.example.educationalinstitutions.dto;
 
 import com.example.educationalinstitutions.base.BaseDto;
+import com.example.educationalinstitutions.domain.Exams;
 import lombok.*;
 
 import java.sql.Date;
@@ -19,4 +20,5 @@ public class CourseDto extends BaseDto<Long> {
     private TeacherDto teacher;
     private List<ReportCardDto> reportCards;
     private List<StudentDto> students;
+    private List<ExamsDto> exams;
 }

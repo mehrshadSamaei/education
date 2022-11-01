@@ -2,6 +2,7 @@ package com.example.educationalinstitutions.repository;
 
 import com.example.educationalinstitutions.base.BaseRepository;
 import com.example.educationalinstitutions.domain.Course;
+import com.example.educationalinstitutions.domain.Exams;
 import com.example.educationalinstitutions.domain.Student;
 import com.example.educationalinstitutions.domain.Teacher;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,11 @@ import java.util.UUID;
 public interface CourseRepository extends BaseRepository<Course , Long> {
     @Override
     Page<Course> findAll(Specification<Course> spec, Pageable pageable);
-    @Query("select c.teacher from Course c where c.title = :title")
+    @Query(value = "select c.teacher from Course c where c.title = :title")
     Teacher findTeacherByTitleSpecialCourse(@Param("title") String title);
-    @Query("select c.students from Course c where c.title = :title")
+    @Query(value = "select c.students from Course c where c.title = :title")
     List<Student> findAllStudentByTitleSpecialCourse(@Param("title") String title);
+    @Query(value = "select c.exams from Course c where c.teacher.username = :username")
+    List<Exams> findAllListExams(String username);
+
 }

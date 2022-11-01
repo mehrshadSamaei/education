@@ -16,7 +16,8 @@ public interface TeacherRepository extends BaseRepository<Teacher , Long> {
     Page<Teacher> findAll(Specification<Teacher> spec, Pageable pageable);
     Teacher findByUsername(String username);
     Teacher findByUsernameAndPassword(String username , String password);
-
+    @Query(value = "select t.courses from Teacher t where t.username = :username")
+    List<Course> findAllCoursesByTeacherUsername(String username);
 //    @Query(value = "select t from Teacher t where t.courses = :courses")
 //    Teacher findAllSpecialCourses(@Param("courses") Course courses);
 }

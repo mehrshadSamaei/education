@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.UUID;
+
 @Entity
 @Table(name = "coursess")
 @Setter
@@ -27,5 +27,6 @@ public class Course extends BaseEntity<Long> {
     private List<ReportCard> reportCards;
     @OneToMany(mappedBy = "course")
     private List<Student> students;
-
+    @OneToMany(mappedBy = "course")
+    private List<Exams> exams;
 }

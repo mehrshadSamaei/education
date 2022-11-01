@@ -69,4 +69,10 @@ public class TeacherResource {
 //                teacherService.findAllSpecialCourses(courseDto)
 //        );
 //    }
+    @GetMapping
+    public ResponseEntity<List<CourseDto>> findAllCourseWithUsername(@RequestParam String username){
+       return ResponseEntity.ok(
+             teacherService.findAllCoursesByTeacherUsername(username)
+        );
+    }
 }

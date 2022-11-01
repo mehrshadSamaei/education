@@ -2,13 +2,16 @@ package com.example.educationalinstitutions.service.impl;
 
 import com.example.educationalinstitutions.base.BaseServiceImpl;
 import com.example.educationalinstitutions.domain.Course;
+import com.example.educationalinstitutions.domain.Exams;
 import com.example.educationalinstitutions.domain.Student;
 import com.example.educationalinstitutions.domain.Teacher;
 import com.example.educationalinstitutions.dto.CourseDto;
+import com.example.educationalinstitutions.dto.ExamsDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.CourseSearch;
 import com.example.educationalinstitutions.mapper.CourseMapper;
+import com.example.educationalinstitutions.mapper.ExamsMapper;
 import com.example.educationalinstitutions.mapper.StudentMapper;
 import com.example.educationalinstitutions.mapper.TeacherMapper;
 import com.example.educationalinstitutions.repository.CourseRepository;
@@ -21,7 +24,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,14 +31,16 @@ public class CourseServiceImpl extends BaseServiceImpl<
         CourseDto, Course, CourseMapper, Long, CourseRepository> implements CourseService {
 
 
-    public CourseServiceImpl(CourseRepository repository, CourseMapper mapper, TeacherMapper teacherMapper, StudentMapper studentMapper) {
+    public CourseServiceImpl(CourseRepository repository, CourseMapper mapper, TeacherMapper teacherMapper, StudentMapper studentMapper, ExamsMapper examsMapper) {
         super(repository, mapper);
         this.teacherMapper = teacherMapper;
         this.studentMapper = studentMapper;
+        this.examsMapper = examsMapper;
     }
 
     private final TeacherMapper teacherMapper;
     private final StudentMapper studentMapper;
+    private final ExamsMapper examsMapper;
     @Override
     public List<CourseDto> findAllAdvanceSearch(CourseSearch courseSearch) {
         List<Course> courseList = repository.findAll((root, query, criteriaBuilder) -> {
@@ -63,5 +67,11 @@ public class CourseServiceImpl extends BaseServiceImpl<
         if (title != null) {
             predicates.add(criteriaBuilder.like(root.get("title"), "%" + title + "%"));
         }
+    }
+
+    @Override
+    public List<ExamsDto> findAllListExams(String username) {
+        List<Exams> allListExams = repository.findAllListExams(username);
+       return examsMapper.convertListEToListT(allListExams);
     }
 }

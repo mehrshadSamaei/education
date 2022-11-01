@@ -30,7 +30,7 @@ public abstract class User extends BaseEntity<Long> {
     @Column(name = "age")
     private Integer age;
     @Column(name = "status")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Wait status = Wait.waiting;
     @Column(name = "national_code" , unique = true)
     private String nationalCode;

@@ -1,5 +1,6 @@
 package com.example.educationalinstitutions.restcontroller;
 
+import com.example.educationalinstitutions.domain.Wait;
 import com.example.educationalinstitutions.dto.AdminDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping("/login")
@@ -37,26 +40,32 @@ public class LoginResource {
             );
         }
     }
+
     @PostMapping("/panel-teacher")
     public ResponseEntity<TeacherDto> loginTeacher(@RequestBody String username, String password) {
         TeacherDto teacherDto = teacherService.findByUsernameAndPassword(username, password);
         if (teacherDto == null) {
             throw new NotFountEntity("username or password is wrong!!!");
-        } else {
+        } else if (teacherDto.getStatus().equals(Wait.confirmation)) {
             return ResponseEntity.ok(
                     teacherDto
             );
+        } else {
+            return null;
         }
     }
+
     @PostMapping("/panel-student")
     public ResponseEntity<StudentDto> loginStudent(@RequestBody String username, String password) {
         StudentDto studentDto = studentService.findByUsernameAndPassword(username, password);
         if (studentDto == null) {
             throw new NotFountEntity("username or password is wrong!!!");
-        } else {
+        } else if (studentDto.getStatus().equals(Wait.confirmation)) {
             return ResponseEntity.ok(
                     studentDto
             );
+        } else {
+            return null;
         }
     }
 }
