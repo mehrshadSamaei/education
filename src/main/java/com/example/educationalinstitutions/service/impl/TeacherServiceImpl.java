@@ -1,12 +1,16 @@
 package com.example.educationalinstitutions.service.impl;
 
 import com.example.educationalinstitutions.base.BaseServiceImpl;
+import com.example.educationalinstitutions.domain.Course;
 import com.example.educationalinstitutions.domain.Teacher;
+import com.example.educationalinstitutions.dto.CourseDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.TeacherSearch;
+import com.example.educationalinstitutions.mapper.CourseMapper;
 import com.example.educationalinstitutions.mapper.TeacherMapper;
 import com.example.educationalinstitutions.repository.TeacherRepository;
 import com.example.educationalinstitutions.service.TeacherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +29,8 @@ public class TeacherServiceImpl extends BaseServiceImpl<
     public TeacherServiceImpl(TeacherRepository repository, TeacherMapper mapper) {
         super(repository, mapper);
     }
-
+    @Autowired
+    private CourseMapper courseMapper;
     @Override
     public List<TeacherDto> findAllAdvanceSearch(TeacherSearch teacherSearch) {
         List<Teacher> teacherList = repository.findAll(
@@ -52,6 +57,14 @@ public class TeacherServiceImpl extends BaseServiceImpl<
         Teacher teacher = repository.findByUsernameAndPassword(username, password);
         return mapper.convertEToT(teacher);
     }
+
+//    @Override
+//    public TeacherDto findAllSpecialCourses(CourseDto courseDto) {
+//        Course course = courseMapper.convertTToE(courseDto);
+//        Teacher teacher = repository.findAllSpecialCourses(course);
+//        TeacherDto teacherDto = mapper.convertEToT(teacher);
+//        return teacherDto;
+//    }
 
     private void setEmailInPredicate(CriteriaBuilder criteriaBuilder, Root<Teacher> root, List<Predicate> predicates, String email) {
         if (email != null) {

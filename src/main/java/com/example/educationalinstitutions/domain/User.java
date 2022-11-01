@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
 
 @MappedSuperclass
+//@Inheritance(strategy = InheritanceType.JOINED)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -30,6 +30,7 @@ public abstract class User extends BaseEntity<Long> {
     @Column(name = "age")
     private Integer age;
     @Column(name = "status")
+    @Enumerated
     private Wait status = Wait.waiting;
     @Column(name = "national_code" , unique = true)
     private String nationalCode;
@@ -39,4 +40,5 @@ public abstract class User extends BaseEntity<Long> {
     private String address;
     @Column(name = "email")
     private String email;
+
 }

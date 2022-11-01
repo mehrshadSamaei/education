@@ -4,6 +4,7 @@ import com.example.educationalinstitutions.base.BaseDto;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -16,4 +17,6 @@ public class CourseDto extends BaseDto<Long> {
     private Date startCourseDay;
     private Date endOfCourseDay;
     private TeacherDto teacher;
+    private List<ReportCardDto> reportCards;
+    private List<StudentDto> students;
 }

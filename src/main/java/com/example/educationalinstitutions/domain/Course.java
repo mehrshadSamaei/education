@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 public class Course extends BaseEntity<Long> {
-    @Column(name = "title" )
+    @Column(name = "title" , unique = true)
     private String title;
     @Column(name = "start_course_day")
     private Date startCourseDay;
@@ -25,5 +25,7 @@ public class Course extends BaseEntity<Long> {
     private Teacher teacher;
     @OneToMany(mappedBy = "course")
     private List<ReportCard> reportCards;
+    @OneToMany(mappedBy = "course")
+    private List<Student> students;
 
 }

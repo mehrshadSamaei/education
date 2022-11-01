@@ -1,12 +1,16 @@
 package com.example.educationalinstitutions.service.impl;
 
 import com.example.educationalinstitutions.base.BaseServiceImpl;
+import com.example.educationalinstitutions.domain.Course;
 import com.example.educationalinstitutions.domain.Student;
+import com.example.educationalinstitutions.dto.CourseDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.search.StudentSearch;
+import com.example.educationalinstitutions.mapper.CourseMapper;
 import com.example.educationalinstitutions.mapper.StudentMapper;
 import com.example.educationalinstitutions.repository.StudentRepository;
 import com.example.educationalinstitutions.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +29,8 @@ public class StudentServiceImpl extends BaseServiceImpl<
     public StudentServiceImpl(StudentRepository repository, StudentMapper mapper) {
         super(repository, mapper);
     }
-
+    @Autowired
+    private CourseMapper courseMapper;
     @Override
     public List<StudentDto> findAllAdvanceSearch(StudentSearch studentSearch) {
         List<Student> studentList = repository.findAll(
@@ -53,6 +58,13 @@ public class StudentServiceImpl extends BaseServiceImpl<
         Student studentEntity = repository.findByUsernameAndPassword(username, password);
         return mapper.convertEToT(studentEntity);
     }
+
+//    @Override
+//    public List<StudentDto> findAllSpecialCourses(CourseDto courseDto) {
+//        Course course = courseMapper.convertTToE(courseDto);
+//        List<Student> allStudentSpecialCourses = repository.findAllSpecialCourses(course);
+//        return mapper.convertListEToListT(allStudentSpecialCourses);
+//    }
 
     private void setMobileNumInPredicate(CriteriaBuilder criteriaBuilder, Root<Student> root, List<Predicate> predicates, String mobileNum) {
         if (mobileNum != null) {

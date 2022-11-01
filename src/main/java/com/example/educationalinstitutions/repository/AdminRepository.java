@@ -15,4 +15,5 @@ public interface AdminRepository extends BaseRepository<Admin , Long> {
     Admin findAdminsByUsername(String username);
 
     Admin findByUsernameAndPassword(String username, String password);
+
 }

@@ -36,7 +36,7 @@ public class TeacherDetailService implements UserDetailsService {
                 .password(user.getPassword())
                 .authorities(
                         user.getRoles().stream()
-                                .map(role -> "ROLE_.".concat(role.getName()))
+                                .map(role -> "ROLE_".concat(role.getRole()))
                                 .distinct().toArray(String[]::new)
                 ).build();
     }

@@ -1,7 +1,5 @@
 package com.example.educationalinstitutions.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ProjectionConfig extends WebSecurityConfigurerAdapter {
-    @Qualifier("Admin")
-    @Autowired
+
+//    @Autowired
     private final UserDetailsService userDetailsService;
+
+    public ProjectionConfig(@Qualifier(value = "AdminDetailService")UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

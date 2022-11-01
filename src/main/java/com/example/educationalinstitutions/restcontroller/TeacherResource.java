@@ -1,11 +1,13 @@
 package com.example.educationalinstitutions.restcontroller;
-
+import com.example.educationalinstitutions.domain.Wait;
 import com.example.educationalinstitutions.dto.AdminDto;
+import com.example.educationalinstitutions.dto.CourseDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.TeacherSearch;
 import com.example.educationalinstitutions.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,4 +56,17 @@ public class TeacherResource {
                 teacherService.findAllAdvanceSearch(teacherSearch)
         );
     }
+    @PatchMapping
+    public ResponseEntity<TeacherDto> changeAccessTeacher(@RequestBody TeacherDto teacherDto){
+        teacherDto.setStatus(Wait.confirmation.getConvertString());
+        return ResponseEntity.ok(
+                teacherService.saveOrUpdate(teacherDto)
+        );
+    }
+//    @GetMapping("/list-teachers-special-course")
+//    public ResponseEntity<TeacherDto> getAllTeachersSpecialCourse(@RequestParam CourseDto courseDto){
+//        return ResponseEntity.ok(
+//                teacherService.findAllSpecialCourses(courseDto)
+//        );
+//    }
 }

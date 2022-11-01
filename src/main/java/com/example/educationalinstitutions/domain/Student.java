@@ -3,10 +3,7 @@ package com.example.educationalinstitutions.domain;
 import com.example.educationalinstitutions.base.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,5 +22,7 @@ public class Student extends User {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "student")
     private List<ReportCard> reportCards;
+    @ManyToOne
+    private Course course;
 
 }

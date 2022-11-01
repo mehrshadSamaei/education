@@ -1,5 +1,7 @@
 package com.example.educationalinstitutions.restcontroller;
 
+import com.example.educationalinstitutions.domain.Wait;
+import com.example.educationalinstitutions.dto.CourseDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.StudentSearch;
@@ -21,9 +23,9 @@ public class StudentResource {
     private final StudentService studentService;
 
     @GetMapping("login-student")
-    public void loginStudent(@RequestParam String username , String password){
+    public ResponseEntity<StudentDto> loginStudent(@RequestParam String username ,@RequestParam String password){
         StudentDto studentDto = studentService.findByUsernameAndPassword(username, password);
-
+        return ResponseEntity.ok(studentDto);
     }
 
 
@@ -51,7 +53,7 @@ public class StudentResource {
                 studentService.saveOrUpdate(studentDto)
         );
     }
-    @DeleteMapping("/delete-admin")
+    @DeleteMapping("/delete-student")
     public void delete(@RequestBody StudentDto studentDto){
         Long id = studentDto.getId();
         studentService.deleteById(id);
@@ -62,4 +64,17 @@ public class StudentResource {
                 studentService.findAllAdvanceSearch(studentSearch)
         );
     }
+    @PatchMapping("/change-access")
+    public ResponseEntity<StudentDto> changeStatus(@RequestBody StudentDto studentDto){
+        studentDto.setStatus(Wait.confirmation.getConvertString());
+        return ResponseEntity.ok(
+                studentService.saveOrUpdate(studentDto)
+        );
+    }
+//    @GetMapping("/list-student-special-courses")
+//    public ResponseEntity<List<StudentDto>> getAllStudentSpecialCourses(@RequestParam CourseDto courseDto){
+//        return ResponseEntity.ok(
+//                studentService.findAllSpecialCourses(courseDto)
+//        );
+//    }
 }

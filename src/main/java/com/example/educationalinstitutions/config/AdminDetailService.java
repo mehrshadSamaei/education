@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Order(1)
-@Qualifier("Admin")
-@Primary
+@Qualifier("AdminDetailService")
+//@Primary
 public class AdminDetailService implements UserDetailsService {
 
     private final AdminService adminService;
@@ -37,7 +37,7 @@ public class AdminDetailService implements UserDetailsService {
                 .password(user.getPassword())
                 .authorities(
                         user.getRoles().stream()
-                                .map(role -> "ROLE_.".concat(role.getName()))
+                                .map(role -> "ROLE_".concat(role.getRole()))
                                 .distinct().toArray(String[]::new)
                 ).build();
     }
