@@ -9,6 +9,7 @@ import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import com.example.educationalinstitutions.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +35,10 @@ public class CourseResource {
         );
     }
     @PostMapping("/save-course")
-    public void createCourse(@RequestBody CourseDto courseDto){
-         ResponseEntity.ok(
-                courseService.saveOrUpdate(courseDto)
-        );
+    public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto courseDto){
+         return new ResponseEntity<>(
+           courseService.saveOrUpdate(courseDto), HttpStatus.CREATED
+         );
     }
     @PutMapping("/update-course")
     public ResponseEntity<CourseDto> updateAdmin(@RequestBody CourseDto courseDto){

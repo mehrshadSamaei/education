@@ -15,17 +15,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Order(2)
-@Qualifier("Student")
+@Qualifier("StudentDetailService")
 public class StudentDetailService implements UserDetailsService {
 
     private final StudentService studentService;
     private final StudentMapper studentMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
 
 
-        var userDto =  studentService.findByUsername(username);
+        var userDto =  studentService
+                .findByUsername(username);
 
         Student user = studentMapper.convertTToE(userDto);
 
@@ -33,7 +35,8 @@ public class StudentDetailService implements UserDetailsService {
         if (user == null){
             throw new UsernameNotFoundException("user not found");
         }
-        return org.springframework.security.core.userdetails.User.withUsername(username)
+        return org.springframework.security
+                .core.userdetails.User.withUsername(username)
                 .password(user.getPassword())
                 .authorities(
                         user.getRoles().stream()

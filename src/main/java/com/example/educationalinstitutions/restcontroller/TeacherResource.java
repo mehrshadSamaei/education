@@ -34,10 +34,10 @@ public class TeacherResource {
         );
     }
     @PostMapping("/save-teacher")
-    public void createAdmin(@RequestBody @Valid TeacherDto teacherDto){
-         ResponseEntity.ok(
-                teacherService.saveOrUpdate(teacherDto)
-        );
+    public ResponseEntity<TeacherDto> createAdmin(@RequestBody @Valid TeacherDto teacherDto){
+         return new ResponseEntity<>(
+                 teacherService.saveOrUpdate(teacherDto) , HttpStatus.CREATED
+         );
     }
     @PutMapping("/update-teacher")
     public ResponseEntity<TeacherDto> updateTeacher(@RequestBody TeacherDto teacherDto){

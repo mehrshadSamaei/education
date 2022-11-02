@@ -23,7 +23,8 @@ public class AdminDetailService implements UserDetailsService {
     private final AdminMapper adminMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
 
 
         var userDto =  adminService.findByUsername(username);
@@ -33,7 +34,8 @@ public class AdminDetailService implements UserDetailsService {
         if (user == null){
             throw new UsernameNotFoundException("user not found");
         }
-        return org.springframework.security.core.userdetails.User.withUsername(username)
+        return org.springframework
+                .security.core.userdetails.User.withUsername(username)
                 .password(user.getPassword())
                 .authorities(
                         user.getRoles().stream()

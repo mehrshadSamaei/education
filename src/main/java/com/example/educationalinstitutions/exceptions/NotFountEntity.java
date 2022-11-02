@@ -4,4 +4,9 @@ public class NotFountEntity extends RuntimeException{
     public NotFountEntity(String message) {
         super(message);
     }
+
+    public NotFountEntity(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

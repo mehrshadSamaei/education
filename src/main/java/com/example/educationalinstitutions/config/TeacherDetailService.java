@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Order(3)
-@Qualifier("Teacher")
+@Qualifier("TeacherDetailService")
 public class TeacherDetailService implements UserDetailsService {
 
     private final TeacherService teacherService;

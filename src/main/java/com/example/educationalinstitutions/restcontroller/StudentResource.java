@@ -9,6 +9,7 @@ import com.example.educationalinstitutions.service.StudentService;
 import com.example.educationalinstitutions.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +22,6 @@ import java.util.List;
 public class StudentResource {
     @Autowired
     private final StudentService studentService;
-
-    @GetMapping("login-student")
-    public ResponseEntity<StudentDto> loginStudent(@RequestParam String username ,@RequestParam String password){
-        StudentDto studentDto = studentService.findByUsernameAndPassword(username, password);
-        return ResponseEntity.ok(studentDto);
-    }
 
 
     @GetMapping("/find-by-id-student")
@@ -42,10 +37,10 @@ public class StudentResource {
         );
     }
     @PostMapping("/save-admin")
-    public void createAdmin(@RequestBody @Valid StudentDto studentDto){
-         ResponseEntity.ok(
-                studentService.saveOrUpdate(studentDto)
-        );
+    public ResponseEntity<StudentDto> createAdmin(@RequestBody @Valid StudentDto studentDto){
+     return new ResponseEntity<>(
+             studentService.saveOrUpdate(studentDto) , HttpStatus.CREATED
+     );
     }
     @PutMapping("/update-admin")
     public ResponseEntity<StudentDto> updateAdmin(@RequestBody StudentDto studentDto){

@@ -4,6 +4,7 @@ import com.example.educationalinstitutions.domain.Wait;
 import com.example.educationalinstitutions.dto.AdminDto;
 import com.example.educationalinstitutions.dto.StudentDto;
 import com.example.educationalinstitutions.dto.TeacherDto;
+import com.example.educationalinstitutions.exceptions.AccessException;
 import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import com.example.educationalinstitutions.service.AdminService;
 import com.example.educationalinstitutions.service.StudentService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.http.HttpResponse;
 
 @RestController
@@ -30,7 +32,7 @@ public class LoginResource {
     private StudentService studentService;
 
     @PostMapping("/panel-admin")
-    public ResponseEntity<AdminDto> loginAdmin(@RequestBody String username, String password) {
+    public ResponseEntity<AdminDto> loginAdmin(@RequestBody @Valid String username, String password) {
         AdminDto adminDto = adminService.findByUsernameAndPassword(username, password);
         if (adminDto == null) {
             throw new NotFountEntity("username or password is wrong!!!");
@@ -42,7 +44,7 @@ public class LoginResource {
     }
 
     @PostMapping("/panel-teacher")
-    public ResponseEntity<TeacherDto> loginTeacher(@RequestBody String username, String password) {
+    public ResponseEntity<TeacherDto> loginTeacher(@RequestBody @Valid String username, String password) {
         TeacherDto teacherDto = teacherService.findByUsernameAndPassword(username, password);
         if (teacherDto == null) {
             throw new NotFountEntity("username or password is wrong!!!");
@@ -51,12 +53,12 @@ public class LoginResource {
                     teacherDto
             );
         } else {
-            return null;
+            throw new AccessException("access denied now");
         }
     }
 
     @PostMapping("/panel-student")
-    public ResponseEntity<StudentDto> loginStudent(@RequestBody String username, String password) {
+    public ResponseEntity<StudentDto> loginStudent(@RequestBody @Valid String username, String password) {
         StudentDto studentDto = studentService.findByUsernameAndPassword(username, password);
         if (studentDto == null) {
             throw new NotFountEntity("username or password is wrong!!!");
@@ -65,7 +67,7 @@ public class LoginResource {
                     studentDto
             );
         } else {
-            return null;
+            throw new AccessException("access denied now");
         }
     }
 }

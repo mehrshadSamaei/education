@@ -6,6 +6,7 @@ import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import com.example.educationalinstitutions.service.CourseService;
 import com.example.educationalinstitutions.service.ExamsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +39,8 @@ public class ExamsResource {
     }
     @PostMapping("/save-exam")
     public ResponseEntity<ExamsDto> save(@RequestBody ExamsDto examsDto){
-        return ResponseEntity.ok(
-                examsService.saveOrUpdate(examsDto)
+        return new ResponseEntity<>(
+                examsService.saveOrUpdate(examsDto), HttpStatus.CREATED
         );
     }
     @PutMapping("/update-exam")

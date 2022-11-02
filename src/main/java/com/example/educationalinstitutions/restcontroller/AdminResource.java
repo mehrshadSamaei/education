@@ -1,16 +1,10 @@
 package com.example.educationalinstitutions.restcontroller;
 
-import com.example.educationalinstitutions.domain.Wait;
 import com.example.educationalinstitutions.dto.AdminDto;
-import com.example.educationalinstitutions.dto.StudentDto;
-import com.example.educationalinstitutions.dto.TeacherDto;
 import com.example.educationalinstitutions.dto.search.AdminSearch;
-import com.example.educationalinstitutions.exceptions.NotFountEntity;
 import com.example.educationalinstitutions.service.AdminService;
-import com.example.educationalinstitutions.service.StudentService;
-import com.example.educationalinstitutions.service.TeacherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,21 +33,20 @@ public class AdminResource {
     }
 
     @PostMapping("/save-admin")
-    public void createAdmin(@RequestBody @Valid AdminDto adminDto) {
-        ResponseEntity.ok(
-                adminService.saveOrUpdate(adminDto)
-        );
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<AdminDto> createAdmin(@RequestBody @Valid AdminDto adminDto) {
+        return new ResponseEntity<>(adminService.saveOrUpdate(adminDto),HttpStatus.CREATED);
     }
 
     @PutMapping("/update-admin")
-    public ResponseEntity<AdminDto> updateAdmin(@RequestBody AdminDto adminDto) {
+    public ResponseEntity<AdminDto> updateAdmin(@RequestBody @Valid AdminDto adminDto) {
         return ResponseEntity.ok(
                 adminService.saveOrUpdate(adminDto)
         );
     }
 
     @DeleteMapping("/delete-admin")
-    public void delete(@RequestBody AdminDto adminDto) {
+    public void delete(@RequestBody @Valid AdminDto adminDto) {
         Long id = adminDto.getId();
         adminService.deleteById(id);
     }
